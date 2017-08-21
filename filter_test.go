@@ -94,7 +94,7 @@ func TestFilterCategory(t *testing.T) {
 	for _, tt := range testData {
 		actual := tt.filter.byCategory(tt.category)
 		if tt.expected != actual {
-			t.Error("Test: %s, expected: %v, got: %v", tt.name, tt.expected, actual)
+			t.Errorf("Test: %s, expected: %v, got: %v", tt.name, tt.expected, actual)
 		}
 	}
 }
@@ -189,7 +189,7 @@ func TestFilterThing(t *testing.T) {
 	for _, tt := range testData {
 		actual := tt.filter.byThing(tt.thing)
 		if tt.expected != actual {
-			t.Error("Test: %s, expected: %v, got: %v", tt.name, tt.expected, actual)
+			t.Errorf("Test: %s, expected: %v, got: %v", tt.name, tt.expected, actual)
 		}
 	}
 }

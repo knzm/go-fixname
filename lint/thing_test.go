@@ -82,21 +82,21 @@ func TestVarObjIsVar(t *testing.T) {
 func TestRangeVarObjIsVar(t *testing.T) {
 	var obj interface{} = RangeVarObj{}
 	if _, ok := obj.(Var); !ok {
-		t.Error("%v is not a Var", obj)
+		t.Errorf("%v is not a Var", obj)
 	}
 }
 
 func TestParameterVarObjIsVar(t *testing.T) {
 	var obj interface{} = ParameterVarObj{}
 	if _, ok := obj.(Var); !ok {
-		t.Error("%v is not a Var", obj)
+		t.Errorf("%v is not a Var", obj)
 	}
 }
 
 func TestResultVarObjIsVar(t *testing.T) {
 	var obj interface{} = ResultVarObj{}
 	if _, ok := obj.(Var); !ok {
-		t.Error("%v is not a Var", obj)
+		t.Errorf("%v is not a Var", obj)
 	}
 }
 
@@ -130,7 +130,7 @@ func TestParameterVarObjKind(t *testing.T) {
 			obj.OfInterfaceMethod(),
 		}
 		if result != tt.expected {
-			t.Error("Test: %s, expected: %v, got: %v", tt.name, tt.expected, result)
+			t.Errorf("Test: %s, expected: %v, got: %v", tt.name, tt.expected, result)
 		}
 	}
 }
@@ -165,7 +165,7 @@ func TestResultVarObjKind(t *testing.T) {
 			obj.OfInterfaceMethod(),
 		}
 		if result != tt.expected {
-			t.Error("Test: %s, expected: %v, got: %v", tt.name, tt.expected, result)
+			t.Errorf("Test: %s, expected: %v, got: %v", tt.name, tt.expected, result)
 		}
 	}
 }

@@ -1,6 +1,8 @@
 package main
 
 import (
+	"regexp"
+
 	"github.com/knzm/go-fixname/lint"
 )
 
@@ -25,6 +27,7 @@ const (
 type Filter struct {
 	category categoryBits
 	thing    thingBits
+	pat      *regexp.Regexp
 }
 
 func (f Filter) byCategory(category lint.Category) bool {
@@ -75,4 +78,12 @@ func (f Filter) byThing(thing interface{}) bool {
 	}
 
 	return false
+}
+
+func (f Filter) byName(name string) bool {
+	if f.pat == nil {
+		return true
+	}
+
+	return f.pat.FindString(name) != ""
 }

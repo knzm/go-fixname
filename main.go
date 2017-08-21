@@ -11,6 +11,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"golang.org/x/tools/go/loader"
@@ -130,6 +131,9 @@ func Main(option *Option) error {
 	for _, info := range infolist {
 		for _, f := range info.Files {
 			lint.WalkNames(iprog.Fset, f, func(id *ast.Ident, thing interface{}) {
+				if !option.filter.byName(id.Name) {
+					return
+				}
 				if !option.filter.byThing(thing) {
 					return
 				}
@@ -159,6 +163,7 @@ var (
 	flagCheck   = flag.Bool("check", false, "perform lint check")
 	flagVerbose = flag.Bool("verbose", false, "show verbose messages")
 	flagFilter  = flag.String("filter", "", "specify filter conditions by comma-separated string")
+	flagRegex   = flag.String("regex", "", "Specify regex for additional filtering")
 )
 
 func init() {
@@ -171,7 +176,7 @@ func init() {
 	}
 }
 
-func parseFilter(str string) (*Filter, error) {
+func parseFilter(str, rx string) (*Filter, error) {
 	var filter Filter
 	for _, e := range strings.Split(str, ",") {
 		e = strings.TrimSpace(e)
@@ -197,13 +202,20 @@ func parseFilter(str string) (*Filter, error) {
 			return nil, fmt.Errorf("Unknown filter: %s", e)
 		}
 	}
+	if rx != "" {
+		pat, err := regexp.Compile("(?i)" + rx)
+		if err != nil {
+			return nil, fmt.Errorf("-regexp: %s", err)
+		}
+		filter.pat = pat
+	}
 	return &filter, nil
 }
 
 func ParseOption() *Option {
 	flag.Parse()
 
-	filter, err := parseFilter(*flagFilter)
+	filter, err := parseFilter(*flagFilter, *flagRegex)
 	if err != nil {
 		log.Fatal(err)
 	}

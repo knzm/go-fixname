@@ -179,8 +179,14 @@ func TestFilterThing(t *testing.T) {
 		},
 		// Func
 		{
-			name:     "Func should match struct func",
-			thing:    lint.FuncObj{},
+			name:     "Func should match func",
+			thing:    lint.NewFuncObj(),
+			filter:   Filter{thing: Func},
+			expected: true,
+		},
+		{
+			name:     "Func should match method",
+			thing:    lint.NewMethodObj(),
 			filter:   Filter{thing: Func},
 			expected: true,
 		},

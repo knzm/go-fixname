@@ -31,11 +31,11 @@ func TestObjString(t *testing.T) {
 			expected: "struct field",
 		},
 		{
-			obj:      FuncObj{},
+			obj:      FuncObj{ObjKind: isFunc},
 			expected: "func",
 		},
 		{
-			obj:      MethodObj{},
+			obj:      FuncObj{ObjKind: isMethod},
 			expected: "method",
 		},
 		{

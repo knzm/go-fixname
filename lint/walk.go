@@ -71,18 +71,15 @@ func WalkNames(fset *token.FileSet, astfile *ast.File, visit func(id *ast.Ident,
 				}
 			}
 
-			var thing interface{}
 			var kind ObjKind
 			if v.Recv == nil {
-				thing = FuncObj{}
 				kind = isFunc
 			} else {
-				thing = MethodObj{}
 				kind = isMethod
 			}
 
 			// global
-			visit(v.Name, thing)
+			visit(v.Name, FuncObj{ObjKind: kind})
 
 			// local
 			visitList(v.Type.Params, ParameterVarObj{ObjKind: kind})

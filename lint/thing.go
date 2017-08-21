@@ -32,14 +32,6 @@ type StructFieldObj struct{}
 
 func (obj StructFieldObj) String() string { return "struct field" }
 
-type FuncObj struct{}
-
-func (obj FuncObj) String() string { return "func" }
-
-type MethodObj struct{}
-
-func (obj MethodObj) String() string { return "method" }
-
 type ObjKind int
 
 const (
@@ -64,6 +56,26 @@ func (k ObjKind) String() string {
 func (k ObjKind) OfFunc() bool            { return k == isFunc }
 func (k ObjKind) OfMethod() bool          { return k == isMethod }
 func (k ObjKind) OfInterfaceMethod() bool { return k == isInterfaceMethod }
+
+type FuncObj struct {
+	ObjKind
+}
+
+func (obj FuncObj) String() string {
+	return obj.ObjKind.String()
+}
+
+func NewFuncObj() FuncObj {
+	return FuncObj{
+		ObjKind: isFunc,
+	}
+}
+
+func NewMethodObj() FuncObj {
+	return FuncObj{
+		ObjKind: isMethod,
+	}
+}
 
 type ParameterVarObj struct {
 	VarObj

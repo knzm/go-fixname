@@ -77,6 +77,12 @@ func NewMethodObj() FuncObj {
 	}
 }
 
+func NewInterfaceMethodObj() FuncObj {
+	return FuncObj{
+		ObjKind: isInterfaceMethod,
+	}
+}
+
 type ParameterVarObj struct {
 	VarObj
 	ObjKind

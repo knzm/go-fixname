@@ -190,6 +190,12 @@ func TestFilterThing(t *testing.T) {
 			filter:   Filter{thing: Func},
 			expected: true,
 		},
+		{
+			name:     "Func should match interface method",
+			thing:    lint.NewMethodObj(),
+			filter:   Filter{thing: Func},
+			expected: true,
+		},
 	}
 
 	for _, tt := range testData {

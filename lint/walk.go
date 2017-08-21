@@ -120,9 +120,7 @@ func WalkNames(fset *token.FileSet, astfile *ast.File, visit func(id *ast.Ident,
 
 		case *ast.InterfaceType:
 			// interface definition (global/local)
-
-			// Do not check interface method names.
-			// They are often constrainted by the method names of concrete types.
+			visitList(v.Methods, FuncObj{ObjKind: isInterfaceMethod})
 			for _, x := range v.Methods.List {
 				ft, ok := x.Type.(*ast.FuncType)
 				if !ok {

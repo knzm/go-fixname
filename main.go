@@ -120,7 +120,14 @@ func Main(option *Option) error {
 	renamer.SetVerbose(verbose)
 	renamer.SetQuiet(quiet)
 
+	infolist := make([]*loader.PackageInfo, 0, len(iprog.Imported))
 	for _, info := range iprog.Imported {
+		infolist = append(infolist, info)
+	}
+	for _, info := range iprog.Created {
+		infolist = append(infolist, info)
+	}
+	for _, info := range infolist {
 		for _, f := range info.Files {
 			lint.WalkNames(iprog.Fset, f, func(id *ast.Ident, thing interface{}) {
 				if !option.filter.byThing(thing) {

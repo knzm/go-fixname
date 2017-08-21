@@ -43,6 +43,9 @@ func (r *Renamer) Update() error {
 	for _, info := range r.iprog.Imported {
 		infolist = append(infolist, info)
 	}
+	for _, info := range r.iprog.Created {
+		infolist = append(infolist, info)
+	}
 	sort.Slice(infolist, func(i, j int) bool {
 		return infolist[i].Pkg.Path() < infolist[j].Pkg.Path()
 	})
